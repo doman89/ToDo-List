@@ -1,0 +1,33 @@
+*
+    margin: 0
+    padding: 0
+    box-sizing: border-box
+
+html
+    font-size: 10px
+    font-family: 'Roboto', arial, sans-serif
+    color: #ffffff
+    body
+        background-color: #000000
+        min-height: 100vh
+        +setFlex(column, flex-start, stretch, nowrap)
+
+@media (min-width: 360px)
+    html
+        font-size: 11px
+
+@media (min-width: 410px)
+    html
+        font-size: 12px
+
+@media (min-width: 768px)
+    html
+        font-size: 15px
+
+@media (min-width: 1024px)
+    html
+        font-size: 18px
+
+@media (min-width: 1366px)
+    html
+        font-size: 20px

@@ -1,0 +1,60 @@
+section
+    margin: 2% auto 5% auto
+    +setFlex(column, center, center, nowrap)
+    h1
+        font-size: 2em
+        text-transform: uppercase
+        margin: 3% auto
+    form
+        &>*
+            background-color: #000000
+            border: 2px solid red
+            color: #ffffff
+            font-size: 1.3em
+            padding: 2px 5px
+        input
+            &:focus
+                border-color: green
+                outline: none
+        button
+            transition: 0.3s
+            &:hover
+                background-color: #ff0000
+                cursor: pointer
+    .lists
+        padding: 5% 2%
+        width: 100vw
+        +setFlex(row, flex-start, strech, nowrap)
+        .todo
+            padding-right: 1%
+            color: #ff0000
+        .done
+            padding-left: 1%
+            color: #00ff00
+            ul
+                li
+                    border-bottom-color: #00ff00
+                    button
+                        border-color: #00ff00
+                        &:hover
+                            background-color: #00ff00
+        div
+            flex-grow: 1
+            h2
+                text-align: center
+            ul
+                list-style: none  
+                li
+                    border-bottom: 1px solid red
+                    padding-bottom: 1%
+                    margin-bottom: 1%
+                    button
+                        font-size: 1em
+                        background-color: #000000
+                        border: 1px solid red
+                        color: #ffffff
+                        padding: 1px 3px
+                        transition: 0.3s
+                        &:hover
+                            background-color: #ff0000
+                            cursor: pointer   

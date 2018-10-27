@@ -1,0 +1,30 @@
+header
+    +setFlex(row, flex-start, stretch, nowrap)
+    min-height: 30vh
+    border-bottom: 2px solid red
+    .image
+        background-color: #000000
+        flex-basis: 50%
+        background-image: url('../img/header_image.jpg')
+        background-position: center
+        background-size: contain
+        background-repeat: no-repeat
+        flex-grow: 1
+    .description
+        padding-left: 2%
+        +setFlex(column, center, strech, nowrap)
+        flex-grow: 1
+        text-shadow: 5px -5px 5px red
+        h1
+            letter-spacing: 1px
+            font-size: 3em
+        h2
+            font-size: 2em
+
+@media (orientation: landscape)
+    header
+        justify-content: center
+        .image
+            flex-basis: auto
+            flex-grow: 1
+            
