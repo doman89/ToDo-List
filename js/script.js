@@ -8,6 +8,13 @@ const numberOfDone = document.querySelector('section .lists .done h2 span');
 const todoList = [];
 const doneList = [];
 
+const deleteTask = e => {
+    const index = e.target.parentNode.dataset.index;
+    doneList.splice(index, 1);
+    ulCompletedList.textContent = null;
+    updateCompletedList();
+}
+
 const updateTaskList = () => {
     ulTaskList.textContent = null;
     todoList.forEach((task, index) => {
@@ -32,27 +39,32 @@ const recoveryTask = e => {
     button.textContent = 'Remove';
     button.removeEventListener('click', recoveryTask);
     button.addEventListener('click', removeTask);
-    todoList.push(doneList[index]);
-    doneList.splice(index, 1);
+    const deleteButton = doneList[index].querySelector('button:nth-last-child(1)');
+    deleteButton.remove();
+    console.log(deleteButton);
+    todoList.push(...doneList.splice(index, 1));
     updateCompletedList();
     updateTaskList();
 }
 
 const removeTask = e => {
-    const index = e.target.parentNode.dataset.index;
-    const button = todoList[index].querySelector('button');
+    const index = e.target.parentNode.dataset.index; //get index of element
+    todoList[index].innerHTML += ' '; // add space between old button and new to create
+    todoList[index].appendChild(document.createElement('button')); //create new button
+    const button = todoList[index].querySelector('button'); //way to first button
     button.textContent = 'Restore';
-    button.removeEventListener('click', removeTask);
     button.addEventListener('click', recoveryTask);
-    doneList.push(todoList[index]);
-    todoList.splice(index, 1);
+    const deleteButton = todoList[index].querySelector('button:nth-last-child(1)'); //way to new button
+    deleteButton.textContent = 'Delete';
+    deleteButton.addEventListener('click', deleteTask);
+    doneList.push(...todoList.splice(index, 1)); //transfer task to completed 
     updateCompletedList();
     updateTaskList();
 };
 
 const addTask = () => {
     event.preventDefault();
-    const newTask = input.value;
+    const newTask = input.value.trim();
     if (!newTask)
         return;
     const tempTask = document.createElement('li');
