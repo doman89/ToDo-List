@@ -31,6 +31,7 @@ const updateCompletedList = () => {
         ulCompletedList.appendChild(task);
     })
     numberOfDone.textContent = doneList.length;
+    input.value = null;
 }
 
 const recoveryTask = e => {
@@ -41,7 +42,6 @@ const recoveryTask = e => {
     button.addEventListener('click', removeTask);
     const deleteButton = doneList[index].querySelector('button:nth-last-child(1)');
     deleteButton.remove();
-    console.log(deleteButton);
     todoList.push(...doneList.splice(index, 1));
     updateCompletedList();
     updateTaskList();
@@ -77,4 +77,15 @@ const addTask = () => {
     input.value = '';
 };
 
+const filterTasks = e => {
+    const tempTodoList = todoList.filter(task => task.textContent.toLowerCase().includes(e.target.value.toLowerCase()));
+    const tempDoneList = doneList.filter(task => task.textContent.toLowerCase().includes(e.target.value.toLowerCase()));
+    ulCompletedList.textContent = ulTaskList.textContent = null;
+    tempTodoList.forEach(li => ulTaskList.appendChild(li));
+    tempDoneList.forEach(li => ulCompletedList.appendChild(li));
+    numberOfToDo.textContent = tempTodoList.length;
+    numberOfDone.textContent = tempDoneList.length;
+}
+
 form.addEventListener('submit', addTask);
+input.addEventListener('input', filterTasks);
