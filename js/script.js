@@ -54,6 +54,9 @@ class Task {
         this.changeStatus();
         return this.setLiElement(li);
     }
+    hasText(text) {
+        return this.getTextContent().toLowerCase().includes(text.toLowerCase());
+    }
 }
 
 const form = document.querySelector('section form');
@@ -115,7 +118,6 @@ const restoreTask = e => {
 }
 
 const removeTask = e => {
-    console.log(e.target);
     const index = e.target.parentNode.dataset.index; //get index of element
     todoTasks[index].toCompleted(restoreTask, deleteTask);
     updateCompletedList();
@@ -125,16 +127,16 @@ const removeTask = e => {
 
 
 const filterTasks = e => {
-    const tempTodoList = todoClass.filter(task => task.hasText(e.target.value));
+    const tempTodoList = todoTasks.filter(task => task.hasText(e.target.value));
     let taskNumberToDo = 0;
     let taskNumberCompleted = 0;
     ulCompletedList.textContent = ulTaskList.textContent = null;
     tempTodoList.forEach(task => {
         if (task.getStatus()) {
-            ulCompletedList.appendChild(task.createLiElement());
+            ulCompletedList.appendChild(task.getLiElement());
             taskNumberCompleted++;
         } else {
-            ulTaskList.appendChild(task.createLiElement());
+            ulTaskList.appendChild(task.getLiElement());
             taskNumberToDo++;
         }
 
@@ -144,4 +146,4 @@ const filterTasks = e => {
 }
 
 form.addEventListener('submit', addTask);
-// input.addEventListener('input', filterTasks);
+input.addEventListener('input', filterTasks);
