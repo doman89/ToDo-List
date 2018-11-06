@@ -1,60 +1,119 @@
 section
-    margin: 2% auto 5% auto
-    +setFlex(column, center, center, nowrap)
-    h1
-        font-size: 2em
-        text-transform: uppercase
-        margin: 3% auto
-    form
-        &>*
+    margin: 2% 0 0 
+    +setFlex(row, flex-start, flex-start, wrap)
+    .addTask
+        display: flex
+        flex-direction: column
+        align-items: center
+        flex-basis: 100%
+        margin-bottom: 3%
+        h1
+            font-size: 2em
+            text-transform: uppercase
+            text-align: center
+            margin: 5% auto
+        form
+            &>*
+                color: #ffffff
+                font-size: 1.3em
+                background-color: #000000
+                border: 2px solid red
+                padding: 2px 5px
+            input
+                &:focus
+                    border-color: green
+                    outline: none
+    .userPanel
+        padding-left: 1%
+        border-top: 2px solid red
+        border-right: 2px solid red
+        flex-basis: 20%
+        flex-grow: 0
+        align-self: stretch
+        overflow: hidden
+        p
+            margin-top: 10%
+            margin-bottom: 3%
+        input
+            max-width: 100%
             background-color: #000000
             border: 2px solid red
-            color: #ffffff
-            font-size: 1.3em
-            padding: 2px 5px
-        input
+            padding: 2% 5%
+            margin-bottom: 20%
+            color: #fff
             &:focus
                 border-color: green
                 outline: none
+        ul
+            margin-bottom: 10%
+            list-style: none
+            li
+                margin-bottom: 3%
+                &:nth-child(2)
+                    color: #f00
+                &:nth-child(3)
+                    color: #0f0
+    .tasks
+        flex-grow: 1
+        align-self: stretch
+        h1
+            margin-bottom: 2%
+            text-align: center
+        .lists
+            display: flex
+            flex-direction: row
+            justify-content: space-around
+            margin-bottom: 3%
+            div
+                flex-basis: 48.5%
+                ul
+                    list-style: none  
+                    li
+                        border-bottom: 1px solid red
+                        padding-bottom: 1%
+                        margin-bottom: 1%
+                        button
+                            font-size: 1em
+                            background-color: #000000
+                            border: 1px solid red
+                            color: #ffffff
+                            padding: 1px 3px
+                &.todo
+                    ul
+                        li
+                            border-bottom-color: #ff0000
+                            button
+                                border-color: #ff0000
+                &.done
+                    ul
+                        li
+                            border-bottom-color: #00ff00
+                            button
+                                border-color: #00ff00
+
+
+@media (orientation: portrait)
+    section
+        .lists
+            flex-direction: column
+@media (min-width: 1024px)
+    section
+        .tasks
+            .lists
+                .done
+                    ul
+                        li
+                            button
+                                &:hover
+                                    background-color: #00ff00
+                .todo
+                    ul
+                        li
+                            button
+                                &:hover
+                                    background-color: #ff0000
         button
             transition: 0.3s
             &:hover
                 background-color: #ff0000
                 cursor: pointer
-    .lists
-        padding: 5% 2%
-        width: 100vw
-        +setFlex(row, flex-start, strech, nowrap)
-        .todo
-            padding-right: 1%
-            color: #ff0000
-        .done
-            padding-left: 1%
-            color: #00ff00
-            ul
-                li
-                    border-bottom-color: #00ff00
-                    button
-                        border-color: #00ff00
-                        &:hover
-                            background-color: #00ff00
-        div
-            flex-grow: 1
-            h2
-                text-align: center
-            ul
-                list-style: none  
-                li
-                    border-bottom: 1px solid red
-                    padding-bottom: 1%
-                    margin-bottom: 1%
-                    button
-                        font-size: 1em
-                        background-color: #000000
-                        border: 1px solid red
-                        color: #ffffff
-                        padding: 1px 3px
-                        transition: 0.3s
-                        &:hover
-                            background-color: #ff0000
-                            cursor: pointer   

@@ -60,11 +60,12 @@ class Task {
 }
 
 const form = document.querySelector('section form');
+const inputSearch = document.querySelector('.search');
 const ulTaskList = document.querySelector('section .lists .todo ul');
 const ulCompletedList = document.querySelector('section .lists .done ul');
 const input = document.querySelector('section input');
-const numberOfToDo = document.querySelector('section .lists .todo h2 span');
-const numberOfDone = document.querySelector('section .lists .done h2 span');
+const numberOfToDo = document.querySelector('.todoTasksNumber');
+const numberOfDone = document.querySelector('.doneTasksNumber');
 
 const todoTasks = [];
 
@@ -118,7 +119,7 @@ const restoreTask = e => {
 }
 
 const removeTask = e => {
-    const index = e.target.parentNode.dataset.index; //get index of element
+    const index = e.target.parentNode.dataset.index;
     todoTasks[index].toCompleted(restoreTask, deleteTask);
     updateCompletedList();
     updateTaskList();
@@ -146,4 +147,4 @@ const filterTasks = e => {
 }
 
 form.addEventListener('submit', addTask);
-input.addEventListener('input', filterTasks);
+inputSearch.addEventListener('input', filterTasks);

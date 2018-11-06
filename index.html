@@ -19,24 +19,36 @@
         </div>
     </header>
     <section>
-        <h1>My tasks:</h1>
-        <form>
-            <input type="text">
-            <button>Add task!</button>
-        </form>
-        <div class="lists">
-            <div class="todo">
-                <h2>To do tasks: <span>0</span></h2>
-                <ul></ul>
-            </div>
-            <div class="done">
-                <h2>Completed tasks: <span>0</span></h2>
-                <ul></ul>
+        <div class="addTask">
+            <h1>Add new task:</h1>
+            <form>
+                <input type="text">
+                <button>Add task!</button>
+            </form>
+        </div>
+        <div class="userPanel">
+            <p>Search your task:</p>
+            <input class="search">
+            <ul>
+                <li>Anonim</li>
+                <li>To do tasks: <span class="todoTasksNumber">0</span></li>
+                <li>Completed tasks: <span class="doneTasksNumber">0</span></li>
+            </ul>
+        </div>
+        <div class="tasks">
+            <h1>My tasks:</h1>
+            <div class="lists">
+                <div class="todo">
+                    <ul></ul>
+                </div>
+                <div class="done">
+                    <ul></ul>
+                </div>
             </div>
         </div>
 
     </section>
-    <footer><span>Author: Mateusz Domański, last update 28.10.2018r</span></footer>
+    <footer><span>Author: Mateusz Domański, last update 06.11.2018r</span></footer>
     <script src="js/script.js"></script>
 </body>
 
