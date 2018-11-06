@@ -15,7 +15,7 @@ section
         form
             &>*
                 color: #ffffff
-                font-size: 1.3em
+                font-size: 1.2em
                 background-color: #000000
                 border: 2px solid red
                 padding: 2px 5px
@@ -35,7 +35,8 @@ section
             margin-top: 10%
             margin-bottom: 3%
         input
-            max-width: 100%
+            font-size: 1.2em
+            max-width: 95%
             background-color: #000000
             border: 2px solid red
             padding: 2% 5%
@@ -94,8 +95,19 @@ section
 
 @media (orientation: portrait)
     section
-        .lists
-            flex-direction: column
+        .userPanel
+            flex-basis: 40%
+        .tasks
+            .lists
+                flex-direction: column
+                div
+                    flex-basis: auto
+                    max-width: 96%
+                    width: 96%
+                    margin: auto
+                    &.done
+                        margin-top: 5%
+
 @media (min-width: 1024px)
     section
         .tasks
