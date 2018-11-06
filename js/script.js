@@ -101,7 +101,7 @@ const updateCompletedList = () => {
             return true;
         }
     }).length;
-    input.value = null;
+    inputSearch.value = null;
 }
 
 const deleteTask = e => {
