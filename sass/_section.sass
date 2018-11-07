@@ -13,16 +13,33 @@ section
             text-align: center
             margin: 5% auto
         form
-            &>*
-                color: #ffffff
-                font-size: 1.2em
-                background-color: #000000
-                border: 2px solid red
-                padding: 2px 5px
-            input
-                &:focus
-                    border-color: green
-                    outline: none
+            display: flex
+            flex-direction: column
+            align-self: stretch
+            div
+                margin-bottom: 10px
+                padding: 2% auto
+                text-align: center
+                &>*
+                    color: #fff
+                    font-size: 1.2em
+                    background-color: #000
+                    padding: 2px 5px
+                button
+                        border: 1px solid red
+                        &:hover
+                            cursor: pointer
+                            background-color: #f00
+                input
+                    border: 1px solid red
+                    &:focus
+                        border-color: green
+                        outline: none
+                    &#inputDate
+                        margin-right: 2%
+                        display: none
+                        &.active
+                            display: inline-block
     .userPanel
         padding-left: 1%
         border-top: 2px solid red
@@ -38,7 +55,7 @@ section
             font-size: 1.2em
             max-width: 95%
             background-color: #000000
-            border: 2px solid red
+            border: 1px solid red
             padding: 2% 5%
             margin-bottom: 20%
             color: #fff

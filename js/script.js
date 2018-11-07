@@ -5,6 +5,8 @@ class Task {
         let _endTime = endTime;
         let _isDone = false;
         let _index = null;
+        let _date = endTime;
+        this.getTime = () => _date;
         this.getLiElement = () => _liElement; //new
         this.setLiElement = li => _liElement = li;
         this.getTextContent = () => _textContent;
@@ -17,7 +19,7 @@ class Task {
     createListElement(removeCallbackFn) {
         const li = document.createElement('li');
         li.className = 'task';
-        li.textContent = `${this.getTextContent()} `;
+        li.textContent = `${this.getTime()? this.showDeadline() : '' } ${this.getTextContent()} `;
         const button = document.createElement('button');
         button.textContent = 'Remove';
         li.appendChild(button);
@@ -57,6 +59,23 @@ class Task {
     hasText(text) {
         return this.getTextContent().toLowerCase().includes(text.toLowerCase());
     }
+    showDeadline() {
+        const currentDate = new Date();
+        const tempDate = new Date(`${currentDate.getFullYear()}, ${currentDate.getMonth() + 1}, ${currentDate.getDate()}, `);
+        console.log(currentDate);
+        console.log(tempDate);
+        if (tempDate.getTime() < this.getTime()) {
+            let deadline = this.getTime() - tempDate.getTime();
+            deadline /= 86400000;
+            if (deadline >= 1)
+                return `End of deadline in ${Math.floor(deadline)} days! `;
+            else if (deadline)
+                return 'End of deadline is today! ';
+        } else {
+            return 'Deadline is end';
+        }
+
+    }
 }
 
 const form = document.querySelector('section form');
@@ -66,18 +85,33 @@ const ulCompletedList = document.querySelector('section .lists .done ul');
 const input = document.querySelector('section input');
 const numberOfToDo = document.querySelector('.todoTasksNumber');
 const numberOfDone = document.querySelector('.doneTasksNumber');
+const inputDate = document.getElementById('inputDate');
+const inputCheckbox = document.getElementById('dateCheckbox');
+
+const dateNowUserComputer = new Date();
 
 const todoTasks = [];
 
 const addTask = () => {
     event.preventDefault();
     const newItem = input.value.trim();
+    let taskDate = new Date(null);
     if (!newItem)
         return;
-    const task = new Task(newItem);
+    if (inputCheckbox.checked) {
+        activityCalendar();
+        inputCheckbox.checked = false;
+        taskDate = new Date(inputDate.valueAsNumber);
+    }
+    const task = new Task(newItem, taskDate.getTime());
     task.createListElement(removeTask);
     todoTasks.push(task);
     updateTaskList();
+    if (inputCheckbox.checked) {
+        activityCalendar();
+        inputCheckbox.checked = false;
+    }
+    inputDate.value = '';
     input.value = '';
 };
 
@@ -146,5 +180,10 @@ const filterTasks = e => {
     numberOfDone.textContent = taskNumberCompleted;
 }
 
+const activityCalendar = () => {
+    inputDate.classList.toggle('active')
+}
+
+inputCheckbox.addEventListener('click', activityCalendar);
 form.addEventListener('submit', addTask);
 inputSearch.addEventListener('input', filterTasks);
