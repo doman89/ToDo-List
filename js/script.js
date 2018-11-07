@@ -65,7 +65,7 @@ class Task {
         return this.getTextContent().toLowerCase().includes(text.toLowerCase());
     }
     showDeadline() {
-        if (!this.getTime())
+        if (this.getTime().getTime() == 0)
             return '';
         const currentDate = new Date();
         const tempDate = new Date(`${currentDate.getFullYear()}, ${currentDate.getMonth() + 1}, ${currentDate.getDate()}, `);
@@ -84,7 +84,6 @@ class Task {
     updateDeadline() {
         const li = this.getLiElement();
         const span = li.querySelector('span');
-        console.log(span.textContent);
         span.textContent = this.showDeadline();
         return this.setLiElement(li);
     }
