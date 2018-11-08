@@ -19,7 +19,10 @@ class Task {
     createListElement(removeCallbackFn) {
         const li = document.createElement('li');
         li.className = 'task';
-        li.textContent = `${this.getTime()? this.showDeadline() : '' } ${this.getTextContent()} `;
+        const span = document.createElement('span');
+        span.textContent = `${this.getTime()? this.showDeadline() : '' }`;
+        li.appendChild(span);
+        li.innerHTML += ` ${this.getTextContent()} `;
         const button = document.createElement('button');
         button.textContent = 'Remove';
         li.appendChild(button);
@@ -33,6 +36,7 @@ class Task {
         return this.setLiElement(li);
     }
     toCompleted(restoreCallbackFn, deleteCallbackFn) {
+        this.updateDeadline();
         const li = this.getLiElement();
         li.innerHTML += ' ';
         li.appendChild(document.createElement('button'));
@@ -46,6 +50,7 @@ class Task {
         return this.setLiElement(li);
     }
     toTodo(removeCallbackFn, restoreCallbackFn) {
+        this.updateDeadline();
         const li = this.getLiElement();
         let button = li.querySelector('button');
         button.textContent = 'Remove';
@@ -60,10 +65,10 @@ class Task {
         return this.getTextContent().toLowerCase().includes(text.toLowerCase());
     }
     showDeadline() {
+        if (!this.getTime())
+            return '';
         const currentDate = new Date();
         const tempDate = new Date(`${currentDate.getFullYear()}, ${currentDate.getMonth() + 1}, ${currentDate.getDate()}, `);
-        console.log(currentDate);
-        console.log(tempDate);
         if (tempDate.getTime() < this.getTime()) {
             let deadline = this.getTime() - tempDate.getTime();
             deadline /= 86400000;
@@ -72,9 +77,16 @@ class Task {
             else if (deadline)
                 return 'End of deadline is today! ';
         } else {
-            return 'Deadline is end';
+            return 'Deadline is end!';
         }
 
+    }
+    updateDeadline() {
+        const li = this.getLiElement();
+        const span = li.querySelector('span');
+        console.log(span.textContent);
+        span.textContent = this.showDeadline();
+        return this.setLiElement(li);
     }
 }
 
@@ -103,7 +115,7 @@ const addTask = () => {
         inputCheckbox.checked = false;
         taskDate = new Date(inputDate.valueAsNumber);
     }
-    const task = new Task(newItem, taskDate.getTime());
+    const task = new Task(newItem, taskDate);
     task.createListElement(removeTask);
     todoTasks.push(task);
     updateTaskList();
@@ -126,7 +138,7 @@ const updateTaskList = () => {
     }).length;
 }
 
-const updateCompletedList = () => {
+const updateCompletedList = (inputClean = true) => {
     ulCompletedList.textContent = null;
     numberOfDone.textContent = todoTasks.filter((task, index) => {
         if (task.getStatus()) {
@@ -135,7 +147,8 @@ const updateCompletedList = () => {
             return true;
         }
     }).length;
-    inputSearch.value = null;
+    if (inputClean)
+        inputSearch.value = null;
 }
 
 const deleteTask = e => {
@@ -161,8 +174,31 @@ const removeTask = e => {
 
 
 
-const filterTasks = e => {
-    const tempTodoList = todoTasks.filter(task => task.hasText(e.target.value));
+const filterTasks = (e, node = false) => {
+    let tempTodoList = null;
+    if (!node)
+        tempTodoList = todoTasks.filter(task => task.hasText(e.target.value));
+    else
+        tempTodoList = todoTasks.filter(task => task.hasText(e.value));
+    let taskNumberToDo = 0;
+    let taskNumberCompleted = 0;
+    ulCompletedList.textContent = ulTaskList.textContent = null;
+    tempTodoList.forEach(task => {
+        if (task.getStatus()) {
+            ulCompletedList.appendChild(task.getLiElement());
+            taskNumberCompleted++;
+        } else {
+            ulTaskList.appendChild(task.getLiElement());
+            taskNumberToDo++;
+        }
+
+    })
+    numberOfToDo.textContent = taskNumberToDo;
+    numberOfDone.textContent = taskNumberCompleted;
+}
+
+const filterTasks2 = e => {
+    const tempTodoList = todoTasks.filter(task => task.hasText(e.value));
     let taskNumberToDo = 0;
     let taskNumberCompleted = 0;
     ulCompletedList.textContent = ulTaskList.textContent = null;
@@ -187,3 +223,12 @@ const activityCalendar = () => {
 inputCheckbox.addEventListener('click', activityCalendar);
 form.addEventListener('submit', addTask);
 inputSearch.addEventListener('input', filterTasks);
+
+const run = () => {
+    todoTasks.forEach(task => task.updateDeadline());
+    updateCompletedList(false);
+    updateTaskList();
+    filterTasks(inputSearch, true);
+}
+
+let timer = setInterval(run, 30000);
